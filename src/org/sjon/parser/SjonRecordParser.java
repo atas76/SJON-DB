@@ -88,11 +88,24 @@ public class SjonRecordParser {
 		StringBuilder namedColumn = new StringBuilder();
 		
 		while(true) {
-			
 			try {
 				currentChar = currentRowScanner.readNext();
 			} catch (ArrayIndexOutOfBoundsException aiobex) {
 				throw new SjonParsingException(SjonParsingException.Cause.SYNTAX_ERROR);
+			}
+			
+			
+			if (currentChar == ORDERED_COLUMN_RECORD_BLOCK_BEGIN) {
+				
+				namedColumn.append(currentChar);
+				
+				while(currentChar != ORDERED_COLUMN_RECORD_BLOCK_END) { // Normally it should include the field name parsed previously
+					currentChar = currentRowScanner.readNext();
+					namedColumn.append(currentChar);
+				}
+		
+				processNamedColumn(namedColumn.toString());
+				return false;
 			}
 			
 			if (currentChar != COLUMN_DELIMITER && currentChar != NAMED_COLUMN_RECORD_BLOCK_END) {
@@ -102,7 +115,7 @@ public class SjonRecordParser {
 				if (currentChar == COLUMN_DELIMITER) {
 					processNamedColumn(namedColumn.toString());
 					return false;
-				} else {
+				} else if (currentChar == NAMED_COLUMN_RECORD_BLOCK_END){
 					processNamedColumn(namedColumn.toString());
 					return true;
 				}
