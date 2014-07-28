@@ -1,11 +1,15 @@
 package org.sjon.db;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +55,10 @@ public class SjonTable {
 		br.close();
 	}
 	
+	public SjonTable(List<SjonRecord> document) {
+		this.records = document;
+	}
+	
 	/**
 	 * 
 	 * Creates the SjonRecord objects (column groups) and loads them. 
@@ -76,6 +84,42 @@ public class SjonTable {
 			}
 		}
 		return this.records;
+	}
+	
+	public void writeData(String filePath, String schemaName) throws IOException {
+		
+		BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), StandardCharsets.UTF_8);
+		
+		if (schemaName != null) {
+			writer.write(schemaName);
+		} else {
+			writer.write("#");
+		}
+		
+		writer.newLine();
+		
+		for (SjonRecord columnGroup:this.records) {
+			writer.write("{");
+			boolean firstOrdered = true;
+			for (String orderedValue:columnGroup.getOrderedValues()) {
+				if (!firstOrdered) {
+					writer.write(",");
+				}
+				firstOrdered = false;
+				writer.write(orderedValue);
+			}
+			boolean firstNamed = true;
+			for (String fieldName:columnGroup.getFieldNames()) {
+				if (!firstNamed) {
+					writer.write(",");
+				}
+				firstNamed = false;
+				writer.write(fieldName + ":" + columnGroup.getValue(fieldName));
+			}
+			writer.write("}");
+			writer.newLine();
+		}
+		writer.close();
 	}
 	
 	/**

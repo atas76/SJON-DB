@@ -1,6 +1,7 @@
 package org.sjon.db;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,5 +56,13 @@ public class SjonRecord {
 		if (key != null) {
 			this.values.put(key, value);
 		}
+	}
+	
+	public List<String> getOrderedValues() {
+		return this.orderedValues;
+	}
+	
+	public Collection<String> getFieldNames() {
+		return this.values.values();
 	}
 }
