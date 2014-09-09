@@ -63,6 +63,6 @@ public class SjonRecord {
 	}
 	
 	public Collection<String> getFieldNames() {
-		return this.values.values();
+		return this.values.keySet();
 	}
 }
