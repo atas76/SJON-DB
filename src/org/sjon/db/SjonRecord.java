@@ -34,10 +34,13 @@ public class SjonRecord {
 	 * Get the value of a column by index
 	 * 
 	 * @param index The index of the column based a predefined order within the column group. 
-	 * @return The value of the column. 
+	 * @return The value of the column. Null if the index is out of bounds.
 	 */
 	public String getValue(int index) {
-		// TODO: Return null when index is out of bounds 
+		
+		if (index > this.orderedValues.size() - 1) 
+			return null;
+		
 		return this.orderedValues.get(index);
 	}
 	
