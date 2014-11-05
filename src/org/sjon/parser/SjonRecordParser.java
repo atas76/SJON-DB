@@ -2,6 +2,14 @@ package org.sjon.parser;
 
 import org.sjon.db.SjonRecord;
 
+/**
+ * 
+ * Parser of an SJON 'record', equivalent to a set of column-value pairs. In essence, it marshals a string representation of a record to an equivalent object 
+ * 
+ * @author Andreas Tasoulas
+ *
+ */
+
 public class SjonRecordParser {
 	
 	private final static char NAMED_COLUMN_RECORD_BLOCK_BEGIN = '{';
@@ -16,12 +24,26 @@ public class SjonRecordParser {
 	
 	private String rawLine;
 	
+	/**
+	 * 
+	 * Loads an SJON file line (an SJON record by convention), for processing and conversion to an SjonRecord object
+	 * 
+	 * @param rawLine the string representation of an SJON record
+	 */
 	public SjonRecordParser(String rawLine) {
 		this.rawLine = rawLine;
 	}
 	
 	private SjonRecord record = new SjonRecord();
 	
+	/**
+	 * 
+	 * Marshals the SJON record string representation loaded in the constructor to an SjonRecord object 
+	 * 
+	 * @return an SjonRecord object
+	 * @throws SjonParsingException a parsing error has occurred
+	 * @throws SjonScanningException a lexical analysis error has occurred
+	 */
 	public SjonRecord parse() throws SjonParsingException, SjonScanningException {
 		
 		char [] lineChars = new char[rawLine.length()]; 

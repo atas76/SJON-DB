@@ -1,6 +1,6 @@
 package org.sjon.parser;
 
-public class SjonScanner {
+class SjonScanner {
 	
 	private char [] lineChars;
 	private int index;

@@ -1,5 +1,11 @@
 package org.sjon.parser;
 
+/**
+ * Self-explanatory
+ * 
+ * @author Andreas Tasoulas
+ *
+ */
 public class SjonParsingException extends Exception {
 	
 	public enum Cause {
