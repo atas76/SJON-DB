@@ -87,6 +87,19 @@ public class SjonRecordParser {
 				throw new SjonParsingException(SjonParsingException.Cause.SYNTAX_ERROR);
 			}
 			
+			if (currentChar == ORDERED_COLUMN_RECORD_BLOCK_BEGIN) {
+				
+				orderedColumn.append(currentChar);
+				
+				while(currentChar != ORDERED_COLUMN_RECORD_BLOCK_END) { // Normally it should include the field name parsed previously
+					currentChar = currentRowScanner.readNext();
+					orderedColumn.append(currentChar);
+				}
+		
+				processOrderedColumn(orderedColumn.toString());
+				return false;
+			}
+			
 			if (currentChar != COLUMN_DELIMITER && currentChar != ORDERED_COLUMN_RECORD_BLOCK_END) {
 				orderedColumn.append(currentChar);
 			} else {
