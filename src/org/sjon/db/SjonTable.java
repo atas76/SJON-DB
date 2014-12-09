@@ -108,12 +108,12 @@ public class SjonTable {
 				firstOrdered = false;
 				writer.write(orderedValue);
 			}
-			boolean firstNamed = true;
+			// boolean firstNamed = true;
 			for (String fieldName:columnGroup.getFieldNames()) {
-				if (!firstNamed) {
-					writer.write(",");
-				}
-				firstNamed = false;
+				// if (!firstNamed) {
+				writer.write(",");
+				// }
+				// firstNamed = false;
 				writer.write(fieldName + ":" + columnGroup.getValue(fieldName));
 			}
 			writer.write("}");
