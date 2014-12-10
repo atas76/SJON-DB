@@ -175,4 +175,43 @@ public class SjonTable {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * Getting a unique SjonRecord object filtered by a sequence of columnt names and values pairs
+	 * 
+	 * @param fieldNames the array of field names for filtering values
+	 * @param values the filtering values
+	 * @return the first SjonRecord object having all values equal to the filtering ones for the corresponding columns specified
+	 * @throws SjonParsingException thrown in case of parsing error in initialization of the SjonRecord objects
+	 * @throws SjonScanningException thrown in case of parsing error in initialization of the SjonRecord objects
+	 */
+	public SjonRecord unique(String [] fieldNames, String [] values) throws SjonParsingException, SjonScanningException {
+		
+		List<SjonRecord> records = this.getData();
+		
+		if (values.length < fieldNames.length) {
+			return null;
+		}
+		
+		for (String value:values) {
+			if (value == null) {
+				return null;
+			}
+		}
+		
+		for (SjonRecord record:records) {
+			boolean matches = true;
+			for (int i = 0; i < fieldNames.length; i++) {
+				if (!record.getValue(fieldNames[i]).equals(values[i])) {
+					matches = false;
+					break;
+				}
+			}
+			if (matches) {
+				return record;
+			}
+		}
+		return null;
+	}
 }

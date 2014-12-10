@@ -16,6 +16,24 @@ public class SjonTableTest {
 	private static final String RESOURCES = "./resources";
 	
 	@Test
+	public void testMultipleFieldsUniqueSelection() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable results = new SjonTable(RESOURCES + "/" + "results.sjon");
+		
+		SjonRecord olyMalm = results.unique(new String [] {"homeTeam", "awayTeam"}, new String [] {"Olympiakos", "Malmo FF"});
+		SjonRecord dorAnder = results.unique(new String [] {"homeTeam", "awayTeam"}, new String [] {"Dortmund", "Anderlecht"});
+		SjonRecord benAtl = results.unique(new String [] {"homeTeam", "awayTeam"}, new String [] {"Benfica", "Atletico Madrid"});
+		
+		assertEquals("4", olyMalm.getValue(2));
+		assertEquals("2", olyMalm.getValue(3));
+		
+		assertEquals("1", dorAnder.getValue(2));
+		assertEquals("1", dorAnder.getValue(3));
+		
+		assertNull(benAtl);
+	}
+	
+	@Test
 	public void testHybridFieldsRowsTable() throws IOException, SjonParsingException, SjonScanningException {
 		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "hybridRows.sjon");
@@ -101,7 +119,5 @@ public class SjonTableTest {
 		SjonRecord againByIndex = this.vocabularyTable.unique(0, "taas");
 		assertEquals("again", againByIndex.getValue(1));
 		assertEquals("πάλι", againByIndex.getValue("greek"));
-		
-		
 	}
 }
