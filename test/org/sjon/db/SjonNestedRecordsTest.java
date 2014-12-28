@@ -15,7 +15,36 @@ public class SjonNestedRecordsTest {
 	private static final String RESOURCES = "./resources";
 	
 	@Test
-	public void testNestedRecordsOrderedType() throws IOException, SjonParsingException, SjonScanningException {
+	public void testNestedRecordsLabeledNamedInNamed() throws IOException, SjonParsingException, SjonScanningException {
+		
+		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "inflections.sjon");
+		
+		SjonRecord record1 = this.vocabularyTable.unique(0, "human");
+		assertEquals("{singular:άνθρωπος,plural:άνθρωποι}", record1.getValue("greek"));
+		assertEquals("{singular:ihminen,plural:ihmiset}", record1.getValue("finnish"));
+		
+		SjonRecord record2 = this.vocabularyTable.unique(0, "step");
+		assertEquals("{singular:βήμα,plural:βήματα}", record2.getValue("greek"));
+		assertEquals("{singular:askel,plural:askelet}", record2.getValue("finnish"));
+		
+	}
+	
+	@Test
+	public void testNestedRecordsNamedInOrdered() throws IOException, SjonParsingException, SjonScanningException {
+		
+		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "full_inflections.sjon");
+		
+		SjonRecord record = this.vocabularyTable.unique(0, "askel");
+		
+		// 1, 3, 5
+		assertEquals("{singular:askel,plural:askelet}", record.getValue(1));
+		assertEquals("{singular:askelta,plural:askelia}", record.getValue(3));
+		assertEquals("{singular:askelelle,plural:askelille}", record.getValue(5));
+		
+	}
+	
+	@Test
+	public void testNestedRecordsOrderedInOrdered() throws IOException, SjonParsingException, SjonScanningException {
 		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "orderedSynonyms.sjon");
 		
@@ -29,7 +58,7 @@ public class SjonNestedRecordsTest {
 	}
 	
 	@Test
-	public void testNestedRecordsOrdered() throws IOException, SjonParsingException, SjonScanningException {
+	public void testNestedRecordsOrderedInNamed() throws IOException, SjonParsingException, SjonScanningException {
 		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "synonyms.sjon");
 		
@@ -39,7 +68,7 @@ public class SjonNestedRecordsTest {
 	}
 	
 	@Test
-	public void testNestedRecordsNamed() throws IOException, SjonParsingException, SjonScanningException {
+	public void testNestedRecordsLabeledOrderedInNamed() throws IOException, SjonParsingException, SjonScanningException {
 		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "synonyms.sjon");
 		
