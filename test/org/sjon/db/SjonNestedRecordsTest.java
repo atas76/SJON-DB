@@ -17,6 +17,8 @@ public class SjonNestedRecordsTest {
 	@Test
 	public void testNestedRecordsLabeledNamedInNamed() throws IOException, SjonParsingException, SjonScanningException {
 		
+		// {:{}}
+		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "inflections.sjon");
 		
 		SjonRecord record1 = this.vocabularyTable.unique(0, "human");
@@ -30,7 +32,21 @@ public class SjonNestedRecordsTest {
 	}
 	
 	@Test
+	public void testNestedRecordsNamedInNamed() throws IOException, SjonParsingException, SjonScanningException {
+		
+		// {{}}
+
+		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "full_inflections_named.sjon");
+		
+		SjonRecord record = this.vocabularyTable.unique(0, "askel");
+		assertEquals("{singular:askel,plural:askelet}", record.getValue(1));
+		
+	}
+	
+	@Test
 	public void testNestedRecordsNamedInOrdered() throws IOException, SjonParsingException, SjonScanningException {
+		
+		// [{}]
 		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "full_inflections.sjon");
 		
@@ -46,6 +62,8 @@ public class SjonNestedRecordsTest {
 	@Test
 	public void testNestedRecordsOrderedInOrdered() throws IOException, SjonParsingException, SjonScanningException {
 		
+		// [[]]
+		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "orderedSynonyms.sjon");
 		
 		SjonRecord record1 = this.vocabularyTable.unique(0, "εγώ");
@@ -60,6 +78,8 @@ public class SjonNestedRecordsTest {
 	@Test
 	public void testNestedRecordsOrderedInNamed() throws IOException, SjonParsingException, SjonScanningException {
 		
+		// {[]}
+		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "synonyms.sjon");
 		
 		SjonRecord record = this.vocabularyTable.unique(0, "εγώ");
@@ -69,6 +89,8 @@ public class SjonNestedRecordsTest {
 	
 	@Test
 	public void testNestedRecordsLabeledOrderedInNamed() throws IOException, SjonParsingException, SjonScanningException {
+		
+		// {:[]}
 		
 		this.vocabularyTable = new SjonTable(RESOURCES + "/" + "synonyms.sjon");
 		

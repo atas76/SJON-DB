@@ -204,11 +204,15 @@ public class SjonRecordParser {
 	private void processNamedColumn(String namedColumn) {
 		
 		int separatorIndex = namedColumn.indexOf(KV_DELIMITER);
+		int beginBlockIndex = namedColumn.indexOf(NAMED_COLUMN_RECORD_BLOCK_BEGIN);
+		
 		String key = null;
 		String value = "";
 		
 		if (separatorIndex == -1) { // The column is unnamed
 			 value = namedColumn;
+		} else if (beginBlockIndex > -1 && separatorIndex > beginBlockIndex) {
+			value = namedColumn;
 		} else {
 			key = namedColumn.substring(0, separatorIndex);
 			value = namedColumn.substring(separatorIndex + 1);
