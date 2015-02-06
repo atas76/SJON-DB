@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.sjon.parser.SjonParsingException;
 import org.sjon.parser.SjonRecordParser;
@@ -178,7 +179,7 @@ public class SjonTable {
 	
 	/**
 	 * 
-	 * Getting a unique SjonRecord object filtered by a sequence of columnt names and values pairs
+	 * Getting a unique SjonRecord object filtered by a sequence of column names and values pairs
 	 * 
 	 * @param fieldNames the array of field names for filtering values
 	 * @param values the filtering values
@@ -213,5 +214,21 @@ public class SjonTable {
 			}
 		}
 		return null;
+	}
+	
+	public SjonTable joinFilterOr(Set<String> values, List<Integer> fields) throws SjonScanningException, SjonParsingException {
+		
+		List<SjonRecord> filteredData = new ArrayList<SjonRecord>();
+		
+		for (SjonRecord record:this.getData()) {
+			for (Integer fieldIndex: fields) {
+				if (values.contains(record.getValue(fieldIndex))) {
+					filteredData.add(record);
+					break;
+				}
+			}
+		}
+		
+		return new SjonTable(filteredData);
 	}
 }

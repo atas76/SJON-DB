@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.sjon.parser.SjonParsingException;
@@ -14,6 +18,29 @@ public class SjonTableTest {
 	private SjonTable vocabularyTable;
 	
 	private static final String RESOURCES = "./resources";
+	
+	@Test
+	public void testJoinFilterOr() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable scores = new SjonTable(RESOURCES + "/" + "scores.sjon");
+		
+		Set<String> values = new HashSet<String>();
+		List<Integer> fieldIndices = new ArrayList<Integer>();
+		
+		values.add("Villarreal");
+		values.add("Malaga");
+		values.add("Levante");
+		values.add("Atletico Madrid");
+		values.add("Real Madrid");
+		
+		fieldIndices.add(0);
+		fieldIndices.add(1);
+		
+		SjonTable filteredScores = scores.joinFilterOr(values, fieldIndices);
+		
+		assertEquals(5, filteredScores.getData().size());
+		
+	}
 	
 	@Test
 	public void testMultipleFieldsUniqueSelection() throws IOException, SjonParsingException, SjonScanningException {
