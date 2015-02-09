@@ -216,6 +216,16 @@ public class SjonTable {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * Performs a join-equivalent operation with a set of arbitrary values
+	 * 
+	 * @param values the values with which the operation will be made
+	 * @param fields the field indices on which the join will be performed. In case of more than one indices the different conditions will be OR-ed
+	 * @return a new SjonTable with values those from the current one, which are joined with the specified values on the specific fields
+	 * @throws SjonScanningException
+	 * @throws SjonParsingException
+	 */
 	public SjonTable joinFilterOr(Set<String> values, List<Integer> fields) throws SjonScanningException, SjonParsingException {
 		
 		List<SjonRecord> filteredData = new ArrayList<SjonRecord>();
@@ -230,5 +240,26 @@ public class SjonTable {
 		}
 		
 		return new SjonTable(filteredData);
+	}
+	
+	/**
+	 * 
+	 * Projects data on a specific column, maintaining the order of the column values in the table
+	 * 
+	 * @param field the index of the projection column
+	 * @return a list of values, belonging to the specified column
+	 * @throws SjonScanningException
+	 * @throws SjonParsingException
+	 */
+	public List<String> projectOrderedColumn(Integer field) throws SjonScanningException, SjonParsingException {
+		
+		List<String> retVal = new ArrayList<String>();
+		
+		for (SjonRecord record:this.getData()) {
+			retVal.add(record.getValue(field));
+		}
+		
+		return retVal;
+		
 	}
 }

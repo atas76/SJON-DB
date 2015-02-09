@@ -20,6 +20,20 @@ public class SjonTableTest {
 	private static final String RESOURCES = "./resources";
 	
 	@Test
+	public void testOrderedProjection() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable ranking = new SjonTable(RESOURCES + "/" + "ranking_europe.sjon");
+		
+		List<String> teams = ranking.projectOrderedColumn(1);
+		
+		assertEquals(74, teams.size());
+		
+		assertEquals("Viktoria Plzen", teams.get(44));
+		assertEquals("Stuttgart", teams.get(58));
+		
+	}
+	
+	@Test
 	public void testJoinFilterOr() throws IOException, SjonParsingException, SjonScanningException {
 		
 		SjonTable scores = new SjonTable(RESOURCES + "/" + "scores.sjon");
