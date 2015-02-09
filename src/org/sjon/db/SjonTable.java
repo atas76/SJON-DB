@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -254,6 +255,18 @@ public class SjonTable {
 	public List<String> projectOrderedColumn(Integer field) throws SjonScanningException, SjonParsingException {
 		
 		List<String> retVal = new ArrayList<String>();
+		
+		for (SjonRecord record:this.getData()) {
+			retVal.add(record.getValue(field));
+		}
+		
+		return retVal;
+		
+	}
+	
+	public Set<String> projectColumn(Integer field) throws SjonScanningException, SjonParsingException {
+		
+		Set<String> retVal = new HashSet<String>();
 		
 		for (SjonRecord record:this.getData()) {
 			retVal.add(record.getValue(field));
