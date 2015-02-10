@@ -1,7 +1,9 @@
 package org.sjon.db;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +20,43 @@ public class SjonTableTest {
 	private SjonTable vocabularyTable;
 	
 	private static final String RESOURCES = "./resources";
+	
+	@Test
+	public void testProjection() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable ranking = new SjonTable(RESOURCES + "/" + "ranking_europe.sjon");
+		
+		Set<String> teams = ranking.projectColumn(1);
+		
+		assertEquals(74, teams.size());
+		
+		assertTrue(teams.contains("Viktoria Plzen"));
+		assertTrue(teams.contains("Stuttgart"));
+		assertFalse(teams.contains("Boca Juniors"));
+	}
+	
+	@Test
+	public void testOrderedProjection() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable ranking = new SjonTable(RESOURCES + "/" + "ranking_europe.sjon");
+		
+		List<String> teams = ranking.projectOrderedColumn(1);
+		
+		assertEquals(74, teams.size());
+		
+		assertEquals("Viktoria Plzen", teams.get(44));
+		assertEquals("Stuttgart", teams.get(58));
+		
+	}
+	
+	@Test
+	public void testJoinFilterAnd() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable scores = new SjonTable(RESOURCES + "/" + "scores.sjon");
+		
+		
+		
+	}
 	
 	@Test
 	public void testJoinFilterOr() throws IOException, SjonParsingException, SjonScanningException {
