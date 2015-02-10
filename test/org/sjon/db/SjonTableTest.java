@@ -54,8 +54,21 @@ public class SjonTableTest {
 		
 		SjonTable scores = new SjonTable(RESOURCES + "/" + "scores.sjon");
 		
+		Set<String> values = new HashSet<String>();
+		List<Integer> fieldIndices = new ArrayList<Integer>();
 		
+		values.add("Villarreal");
+		values.add("Malaga");
+		values.add("Levante");
+		values.add("Atletico Madrid");
+		values.add("Real Madrid");
 		
+		fieldIndices.add(0);
+		fieldIndices.add(1);
+		
+		SjonTable filteredScores = scores.joinFilterAnd(values, fieldIndices);
+		
+		assertEquals(4, filteredScores.getData().size());
 	}
 	
 	@Test

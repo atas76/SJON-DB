@@ -251,10 +251,10 @@ public class SjonTable {
 		for (SjonRecord record:this.getData()) {
 			for (Integer fieldIndex: fields) {
 				if (!values.contains(record.getValue(fieldIndex))) {
-					break record;
+					continue record;
 				}
-				filteredData.add(record);
 			}
+			filteredData.add(record);
 		}
 		
 		return new SjonTable(filteredData);
