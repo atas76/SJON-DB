@@ -50,6 +50,15 @@ public class SjonTableTest {
 	}
 	
 	@Test
+	public void testJoinFilterAnd() throws IOException, SjonParsingException, SjonScanningException {
+		
+		SjonTable scores = new SjonTable(RESOURCES + "/" + "scores.sjon");
+		
+		
+		
+	}
+	
+	@Test
 	public void testJoinFilterOr() throws IOException, SjonParsingException, SjonScanningException {
 		
 		SjonTable scores = new SjonTable(RESOURCES + "/" + "scores.sjon");

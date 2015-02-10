@@ -243,6 +243,23 @@ public class SjonTable {
 		return new SjonTable(filteredData);
 	}
 	
+	public SjonTable joinFilterAnd(Set<String> values, List<Integer> fields) throws SjonScanningException, SjonParsingException {
+		
+		List<SjonRecord> filteredData = new ArrayList<SjonRecord>();
+		
+		record:
+		for (SjonRecord record:this.getData()) {
+			for (Integer fieldIndex: fields) {
+				if (!values.contains(record.getValue(fieldIndex))) {
+					break record;
+				}
+				filteredData.add(record);
+			}
+		}
+		
+		return new SjonTable(filteredData);
+	}
+	
 	/**
 	 * 
 	 * Projects data on a specific column, maintaining the order of the column values in the table
